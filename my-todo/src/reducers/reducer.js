@@ -1,7 +1,7 @@
 export const todo = [
     {
         item: 'Learn about reducers',
-        selectedDate: '11/21/12',
+        selectedDate: '2017-05-24T10:30',
         completed: false,
         id: 3892987589
     }

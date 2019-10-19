@@ -14,6 +14,7 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider
 } from "@material-ui/pickers";
+import * as moment  from 'moment'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,11 +44,12 @@ const useStyles = makeStyles(theme => ({
 
 export const TodoForm = ({dispatch}) => {
 
-    const [selectedDate, handleDateChange] = useState(new Date());
-
     const classes = useStyles();
 
     const [item, setItem] = useState("");
+
+    const [selectedDate, handleDateChange] = useState(new Date());
+
 
     const handleChanges = event => {
         setItem(event.target.value);
@@ -57,12 +59,15 @@ export const TodoForm = ({dispatch}) => {
     const submitForm = event => {
         event.preventDefault();
         dispatch({
-            type: "ADD_TODO",
-            payload: item,
-            payload: selectedDate,
+            type: "ADD_ITEM",
+            payload: item || item.title
+        });
+        dispatch({
+            type: "ADD_DATE",
+            payload: selectedDate || selectedDate.title
         });
         setItem("");
-        handleDateChange("");
+        handleDateChange("")
     };
     const clearCompleted = event => {
         event.preventDefault();
@@ -80,11 +85,11 @@ export const TodoForm = ({dispatch}) => {
                     Todo
                 </label>
                 <TextField  label="todo"
-                        onChange={handleChanges}
-                        value={item}
+                            onChange={handleChanges}
+                            value={item}
                 />
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+                <DateTimePicker value={selectedDate} label={'Due On'} defaultValue={"2017-05-24T10:30"} onChange={handleDateChange} />
               </MuiPickersUtilsProvider>
               <Button type="submit" onClick = {submitForm}>Add Item</Button>
                 <Button onClick={clearCompleted}>Clear Item</Button>

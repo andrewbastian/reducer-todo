@@ -10,7 +10,8 @@ export const TodoList = () => {
     return (
         <div>
             <TodoForm dispatch={dispatch} />
-            {state.map(todo => {
+
+          {state.map(todo => {
                 return <Todo
                         key={todo.id}
                         todo={todo}
