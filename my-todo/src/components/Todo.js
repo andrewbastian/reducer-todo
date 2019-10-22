@@ -9,6 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 //import DeleteIcon from '@material-ui/icons/Delete'
 
+import * as moment from 'moment'
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -43,9 +45,9 @@ export function Todo({ todo, dispatch }){
             onClick={toggleCompleted}>
             <ListItemIcon></ListItemIcon>
             {todo.item}
-            {todo.selectedDate}
+            {moment(todo.selectedDate).format('L')}
           </ListItemText>
-          <Switch edge='end' onClick={toggleCompleted} onChange={`todo${todo.completed ? "completed" : ""}`} inputProps={{
+          <Switch edge='end' onClick={toggleCompleted} checked={todo.completed} className={`todo${todo.completed ? "completed" : ""}`} inputProps={{
               'aria-labelledby' : 'switch-list-label-to-do'
             }}></Switch>
         </List>

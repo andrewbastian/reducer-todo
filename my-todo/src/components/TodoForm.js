@@ -48,7 +48,7 @@ export const TodoForm = ({ dispatch }) => {
 
     const [item, setItem] = useState("");
 
-    const [selectedDate, handleDateChange] = useState(Date.now());
+    const [selectedDate, handleDateChange] = useState();
 
 
         // your handle change has no way to differentiate between the 2 fields.
@@ -57,10 +57,10 @@ export const TodoForm = ({ dispatch }) => {
         setItem(event.target.value);
     };
 
-    const handleDateChanges = event => {
-        console.log(event.target)
-        // handleDateChange("10/19/2019")
-    }
+    // const handleDateChanges = event => {
+    //     console.log("date event", event)
+    //     handleDateChange(event._i)
+    // }
 
     const submitForm = event => {
         event.preventDefault();
@@ -100,7 +100,7 @@ export const TodoForm = ({ dispatch }) => {
                             value={item}
                         />
                         <MuiPickersUtilsProvider utils={MomentUtils}>
-                            <DatePicker value={selectedDate} label={'Due On'}  onChange={handleDateChanges} />
+                            <DatePicker value={selectedDate} label={'Due On'}  onChange={handleDateChange} />
                         </MuiPickersUtilsProvider>
                         <Button type="submit" onClick={submitForm}>Add Item</Button>
                         <Button onClick={clearCompleted}>Clear Item</Button>
