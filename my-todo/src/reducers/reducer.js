@@ -16,8 +16,9 @@ export const reducer = (state, action) => {
             return [
                 ...state,
                 {
-                    item: action.payload,
-                    selectedDate: action.payload,
+                    // payload for item and date can't be same.  Need to send object with 2 properties as payload
+                    item: action.payload.item,
+                    selectedDate: action.payload.date,
                     id: Date.now(),
                     completed: false
                 }
