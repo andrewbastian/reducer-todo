@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
-import {makeStyles} from '@material-ui/core';
-import {Button} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 //import AddIcon from '@material-ui/icons/Add';
 //import DeleteIcon from '@material-ui/icons/Delete'
 import AppBar from '@material-ui/core/AppBar';
@@ -14,7 +14,6 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider
 } from "@material-ui/pickers";
-import * as moment  from 'moment'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,32 +41,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const TodoForm = ({dispatch}) => {
+export const TodoForm = ({ dispatch }) => {
 
     const classes = useStyles();
 
     const [item, setItem] = useState("");
 
-    const [selectedDate, handleDateChange] = useState(new Date());
+    const [selectedDate, handleDateChange] = useState();
 
+    const [selectedTags, setTags] = useState("")
 
-    const handleChanges = event => {
+    const handleInputChanges = event => {
         setItem(event.target.value);
-        handleDateChange(event.target.value)
     };
 
-    const submitForm = event => {
+    const submitForm = (event, value) => {
         event.preventDefault();
+
         dispatch({
-            type: "ADD_ITEM",
-            payload: item || item.title
-        });
-        dispatch({
-            type: "ADD_DATE",
-            payload: selectedDate || selectedDate.title
+            type: "ADD_TODO",
+            payload: {item:item, date: selectedDate, tags:selectedTags}
         });
         setItem("");
-        handleDateChange("")
+        handleDateChange(null)
+        setTags("")
     };
     const clearCompleted = event => {
         event.preventDefault();
@@ -85,12 +82,16 @@ export const TodoForm = ({dispatch}) => {
                     Todo
                 </label>
                 <TextField  label="todo"
-                            onChange={handleChanges}
+                            onChange={handleInputChanges}
                             value={item}
                 />
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DateTimePicker value={selectedDate} label={'Due On'} defaultValue={"2017-05-24T10:30"} onChange={handleDateChange} />
+                <DateTimePicker value={selectedDate} label={'Due On'} onChange={handleDateChange} />
               </MuiPickersUtilsProvider>
+              <TextField  label="tag"
+                          onChange={e=>setTags(e.target.value)}
+                          value={selectedTags}
+              />
               <Button type="submit" onClick = {submitForm}>Add Item</Button>
                 <Button onClick={clearCompleted}>Clear Item</Button>
             </form>

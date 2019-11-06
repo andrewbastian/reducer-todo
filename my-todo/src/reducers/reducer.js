@@ -2,9 +2,11 @@ export const todo = [
     {
         item: 'Learn about reducers',
         selectedDate: '2017-05-24T10:30',
+        tags: 'school',
         completed: false,
         id: 3892987589
-    }
+    },
+
 ];
 
 
@@ -16,8 +18,9 @@ export const reducer = (state, action) => {
             return [
                 ...state,
                 {
-                    item: action.payload,
-                    selectedDate: action.payload,
+                    item: action.payload.item,
+                    tags: action.payload.tags,
+                    selectedDate: action.payload.date,
                     id: Date.now(),
                     completed: false
                 }
